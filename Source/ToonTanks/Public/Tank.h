@@ -19,6 +19,13 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class USpringArmComponent *springArm;
@@ -29,6 +36,8 @@ private:
 	float moveSpeed = 500.f;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float rotationSpeed = 100.f;
+
+	APlayerController* playerController;
 
 	void Move(float value);
 	void Turn(float value);

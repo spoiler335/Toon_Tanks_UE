@@ -6,6 +6,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/CapsuleComponent.h"
+#include "DrawDebugHelpers.h"
 
 ATank::ATank()
 {
@@ -15,6 +16,14 @@ ATank::ATank()
     camera = CreateAbstractDefaultSubobject<UCameraComponent>(TEXT("Camera"));
     camera->SetupAttachment(springArm);
     
+}
+
+void ATank::BeginPlay()
+{
+    Super::BeginPlay();
+
+    playerController = Cast<APlayerController>(GetController());
+
 }
 
 void ATank::Move(float value)
@@ -34,5 +43,17 @@ void ATank::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
     Super::SetupPlayerInputComponent(PlayerInputComponent);
     PlayerInputComponent->BindAxis("MoveForward", this, &ATank::Move);
     PlayerInputComponent->BindAxis("Turn", this, &ATank::Turn);
+}
+
+void ATank::Tick(float deltaTime)
+{
+    Super::Tick(deltaTime);
+
+    if (playerController)
+    {
+        FHitResult hit;
+        playerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility, false, hit);
+        RotateTurret(hit.ImpactPoint);
+    }
 
 }
