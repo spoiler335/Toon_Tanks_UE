@@ -2,6 +2,7 @@
 
 #include "Tower.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 
 void ATower::BeginPlay()
 {
@@ -13,15 +14,30 @@ void ATower::BeginPlay()
         return;
     }
     UE_LOG(LogTemp, Warning, TEXT("Player tank: %s"), *playerTank->GetName());
+
+    GetWorldTimerManager().SetTimer(fireRateTimerHandle,this, &ATower::CheckFireCondition,fireRate,true);
 }
 
 void ATower::Tick(float deltaTime)
 {
     Super::Tick(deltaTime);
 
-    float distance = FVector::Dist(GetActorLocation(), playerTank->GetActorLocation());
-    if (distance <= fireRange)
+    if (IsTankInFireRange()) RotateTurret(playerTank->GetActorLocation());    
+}
+
+void ATower::CheckFireCondition()
+{
+    UE_LOG(LogTemp, Warning, TEXT("CheckFireCondition"));
+    if(IsTankInFireRange()) Fire();
+}
+
+bool ATower::IsTankInFireRange()
+{
+    if (!playerTank)
     {
-        RotateTurret(playerTank->GetActorLocation());
+        UE_LOG(LogTemp, Warning, TEXT("Player tank not found"));
+        return false;
     }
+
+    return FVector::Dist(GetActorLocation(), playerTank->GetActorLocation()) <= fireRange;
 }
