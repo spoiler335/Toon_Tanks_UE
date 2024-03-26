@@ -34,5 +34,7 @@ void ABasePawn::Fire()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Fire!"));
 	FVector spawnLocation = projectileSpawnPoint->GetComponentLocation();
-	DrawDebugSphere(GetWorld(), spawnLocation, 25.f, 12, FColor::Red, false, 2.f);
+	FRotator spawnRotation = projectileSpawnPoint->GetComponentRotation();
+	// DrawDebugSphere(GetWorld(), spawnLocation, 25.f, 12, FColor::Red, false, 2.f);
+	auto projectile = GetWorld()->SpawnActor<AProjectile>(projectilePrefab, spawnLocation, spawnRotation);
 }
