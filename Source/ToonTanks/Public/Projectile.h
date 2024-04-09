@@ -27,4 +27,7 @@ private:
 
 	UPROPERTY(VisibleAnyWhere, Category = "Movement")
 	UProjectileMovementComponent *projectileMovement;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector impulse, const FHitResult& hit );
 };

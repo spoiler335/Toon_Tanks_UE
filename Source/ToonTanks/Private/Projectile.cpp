@@ -22,7 +22,12 @@ AProjectile::AProjectile()
 void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
+
+	projectileMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 	
 }
 
-
+void AProjectile::OnHit(UPrimitiveComponent* hitComponent, AActor* otherActor, UPrimitiveComponent* otherComponent, FVector impulse, const FHitResult& hit)
+{
+	UE_LOG(LogTemp, Warning, TEXT("OnHit-2"));
+}
