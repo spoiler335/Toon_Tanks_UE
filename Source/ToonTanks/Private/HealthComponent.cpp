@@ -39,4 +39,3 @@ void UHealthComponent::DamageTaken(AActor* damagedActor, float damage, const UDa
 
 	UE_LOG(LogTemp, Warning, TEXT("Health - %.2f"), currentHealth);
 }
-
