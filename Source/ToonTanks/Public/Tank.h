@@ -22,9 +22,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void HandleDestruction();
+
+	APlayerController *GetTankPlayerController() const { return tankPlayerController;}
+
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	virtual void
+	BeginPlay() override;
 
 private:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -37,7 +42,7 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Movement", meta = (AllowPrivateAccess = "true"))
 	float rotationSpeed = 100.f;
 
-	APlayerController* playerController;
+	APlayerController *tankPlayerController;
 
 	void Move(float value);
 	void Turn(float value);

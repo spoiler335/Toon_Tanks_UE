@@ -15,20 +15,28 @@ void ATower::BeginPlay()
     }
     UE_LOG(LogTemp, Warning, TEXT("Player tank: %s"), *playerTank->GetName());
 
-    GetWorldTimerManager().SetTimer(fireRateTimerHandle,this, &ATower::CheckFireCondition,fireRate,true);
+    GetWorldTimerManager().SetTimer(fireRateTimerHandle, this, &ATower::CheckFireCondition, fireRate, true);
 }
 
 void ATower::Tick(float deltaTime)
 {
     Super::Tick(deltaTime);
 
-    if (IsTankInFireRange()) RotateTurret(playerTank->GetActorLocation());    
+    if (IsTankInFireRange())
+        RotateTurret(playerTank->GetActorLocation());
+}
+
+void ATower::HandleDestruction()
+{
+    Super::HandleDestruction();
+    Destroy();
 }
 
 void ATower::CheckFireCondition()
 {
     UE_LOG(LogTemp, Warning, TEXT("CheckFireCondition"));
-    if(IsTankInFireRange()) Fire();
+    if (IsTankInFireRange())
+        Fire();
 }
 
 bool ATower::IsTankInFireRange()
