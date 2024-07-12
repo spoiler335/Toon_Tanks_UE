@@ -21,5 +21,6 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
-	class ATank* tank;
+	class ATank *tank;
+	class AToonTanksPlayerController *playerController;
 };
