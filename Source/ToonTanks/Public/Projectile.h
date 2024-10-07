@@ -9,6 +9,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
+#include "Camera/CameraShakeBase.h"
 #include "Projectile.generated.h"
 
 UCLASS()
@@ -45,6 +46,9 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	USoundBase *hitSound;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TSubclassOf<UCameraShakeBase> hitCameraShake;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent *hitComponent, AActor *otherActor, UPrimitiveComponent *otherComponent, FVector impulse, const FHitResult &hit);

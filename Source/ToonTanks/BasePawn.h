@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "Public/Projectile.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Camera/CameraShakeBase.h"
 #include "BasePawn.generated.h"
 
 UCLASS()
@@ -40,4 +41,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	class USoundBase *explosionSound;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TSubclassOf<UCameraShakeBase> deathCameraShake;
 };
