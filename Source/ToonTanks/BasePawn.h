@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Public/Projectile.h"
+#include "Particles/ParticleSystemComponent.h"
 #include "BasePawn.generated.h"
 
 UCLASS()
@@ -33,4 +34,10 @@ private:
 	USceneComponent *projectileSpawnPoint;
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	TSubclassOf<class AProjectile> projectilePrefab;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	UParticleSystem *deathParticles;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	class USoundBase *explosionSound;
 };

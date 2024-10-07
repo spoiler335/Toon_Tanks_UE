@@ -9,22 +9,26 @@ ABasePawn::ABasePawn()
 {
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	capsuleComponent = CreateAbstractDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
+	capsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Capsule Collider"));
 	RootComponent = capsuleComponent;
 
-	baseMesh = CreateAbstractDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
+	baseMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Base Mesh"));
 	baseMesh->SetupAttachment(capsuleComponent);
 
-	turretMesh = CreateAbstractDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
+	turretMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Turret Mesh"));
 	turretMesh->SetupAttachment(baseMesh);
 
-	projectileSpawnPoint = CreateAbstractDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
+	projectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projectile Spawn Point"));
 	projectileSpawnPoint->SetupAttachment(turretMesh);
 }
 
 void ABasePawn::HandleDestruction()
 {
-	// TODO: add sound and special effects
+	if (deathParticles)
+		UGameplayStatics::SpawnEmitterAtLocation(this, deathParticles, GetActorLocation(), GetActorRotation());
+
+	if (explosionSound)
+		UGameplayStatics::PlaySoundAtLocation(this, explosionSound, GetActorLocation());
 }
 
 void ABasePawn::RotateTurret(FVector lookAtTarget)
