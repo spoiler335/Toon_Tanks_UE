@@ -34,6 +34,10 @@ void ATower::HandleDestruction()
 
 void ATower::CheckFireCondition()
 {
+    if (!playerTank)
+        return;
+    if (!playerTank->bIsAlive)
+        return;
     UE_LOG(LogTemp, Warning, TEXT("CheckFireCondition"));
     if (IsTankInFireRange())
         Fire();
